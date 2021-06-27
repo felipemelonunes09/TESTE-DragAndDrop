@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        div {
+            height: 250px;
+            width:250px;
+            margin-top: 30px;
+            border-radius: 20px;
+        }
+
+        .pontilhado {
+            border:2px dashed #ddd;
+            position: relative;
+        }
+
+            .pontilhado > * {
+                position: absolute;
+                top:50%;
+                left:50%;
+                transform:translate(-50%, -50%);
+            }
+
+    </style>
+</head>
+<body>
+    <div id="A" 
+          ondragenter="dragEnter(event)"
+         ondragleave="dragLeave(event)"
+         ondrop="drop(event)"
+         ondragover="dragOver(event)"
+         class="pontilhado">
+        <!--<img id="lambo" width="200" height="200" draggable="true"  
+             ondragstart="dragStart(event)"
+             ondragend="dragEnd(event)"
+             src="lambo.jpg" />-->
+        <video id="vdo" width="300" height="300" draggable="true"  
+               controls     
+               ondragstart="dragStart(event)"
+                    ondragend="dragEnd(event)">
+            <source src="vdo.mp4"type="video/mp4" />
+        </video>
+    </div>
+
+    <div id="B" 
+         ondragenter="dragEnter(event)"
+         ondragleave="dragLeave(event)"
+         ondrop="drop(event)"
+         ondragover="dragOver(event)"
+         class="pontilhado">
+
+    </div>
+
+    <script>
+
+        var video = document.getElementById("vdo");
+
+        function dragStart(e) {
+            e.dataTransfer.setData("lambo", e.target.id);
+            video.pause();
+        }
+        function dragEnd(e) {
+            video.play();
+            console.log('Drag End');
+        }
+        function dragEnter(e) { console.log('Drag Enter'); }
+        function dragLeave(e) { console.log('Drag Leave'); }
+        function drop(e) {
+            var elemento = e.dataTransfer.getData("lambo");
+            var img = document.getElementById(elemento);
+            if (e.target.tagName == "DIV") {
+                e.target.appendChild(img);
+
+            } else {
+                e.target.parentElement.appendChild(img);
+                
+            }
+            
+
+        }
+        function dragOver(e) {
+            e.preventDefault();
+        }
+    </script>
+</body>
+</html>
